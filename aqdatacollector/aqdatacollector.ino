@@ -118,6 +118,7 @@ void takeReadings(){
   }
   else{
     Serial.println("Error opening logtest.txt");
+
   }
 
  

@@ -32,7 +32,20 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-DateTime now = rtc.now();
+  static const unsigned long REFRESH_INTERVAL = 2000; // ms
+  static unsigned long lastRefreshTime = 0;
+
+  if(millis() - lastRefreshTime >= REFRESH_INTERVAL)
+  {
+    lastRefreshTime += REFRESH_INTERVAL;
+        takeReadings();
+  }
+
+}
+
+void takeReadings(){
+
+  DateTime now = rtc.now();
   
   int16_t differential_01NO, differential_23NO, differential_01CO, differential_23CO;
   differential_01NO = ads1115NO.readADC_Differential_0_1();
@@ -40,6 +53,7 @@ DateTime now = rtc.now();
   differential_01CO = ads1115CO.readADC_Differential_0_1();
   differential_23CO = ads1115CO.readADC_Differential_2_3();
 
+  
   uint16_t temperatureValue = analogRead(temperature_input);
   uint16_t humidityValue = analogRead(humidity_input);
 
@@ -61,6 +75,5 @@ DateTime now = rtc.now();
  Serial.print(tempValue);
  Serial.print(",");
  Serial.println(humidValue);
- 
-
+  
 }

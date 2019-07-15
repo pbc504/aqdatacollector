@@ -33,25 +33,30 @@ void loop() {
   
 
   
-  int16_t differential1, differential2, differential3, differential4;
+  int16_t differential_01NO, differential_23NO, differential_01CO, differential_23CO;
   
-  differential1 = ads1115NO.readADC_Differential_0_1();
-  differential2 = ads1115NO.readADC_Differential_2_3();
-  differential3 = ads1115CO.readADC_Differential_0_1();
-  differential4 = ads1115CO.readADC_Differential_2_3();
+  differential_01NO = ads1115NO.readADC_Differential_0_1();
+  differential_23NO = ads1115NO.readADC_Differential_2_3();
+  differential_01CO = ads1115CO.readADC_Differential_0_1();
+  differential_23CO = ads1115CO.readADC_Differential_2_3();
 
 
 
   
-  // 6144mV / 32767 = 0.1875, 2^15 = 23767 because the ADC is a 16 bit signed, first bit decides if negative or positive
-  Serial.print("NO Differential between 0 and 1: "); Serial.print(differential1 * 0.1875); Serial.println("mV");
-  getTime();
-  Serial.print("NO Differential between 2 and 3: "); Serial.print(differential2 * 0.1875); Serial.println("mV");
-  getTime();
-  Serial.print("CO Differential between 0 and 1: "); Serial.print(differential3 * 0.1875); Serial.println("mV");
-  getTime();
-  Serial.print("CO Differential between 2 and 3: "); Serial.print(differential4 * 0.1875); Serial.println("mV");
-  getTime();
+  // 6144mV / 32767 = 0.1875, 2^15 = 23767 because the ADC is a 16 bit signed, first bit decides if negative or positive  
+ Serial.print("timestamp");
+ Serial.print(",");
+ Serial.print(differential_01NO * 0.1875);
+ Serial.print(",");
+ Serial.print(differential_23NO * 0.1875);
+ Serial.print(",");
+ Serial.print(differential_01CO * 0.1875);
+ Serial.print(",");
+ Serial.print(differential_23CO * 0.1875);
+ Serial.print(",");
+ Serial.print("temperature");
+ Serial.print(",");
+ Serial.println("humidity");
  
   delay(2000);
 }

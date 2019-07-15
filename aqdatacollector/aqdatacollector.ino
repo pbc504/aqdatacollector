@@ -77,8 +77,8 @@ void takeReadings(){
   float humidValue = humidityValue;
 
   // Creates the text file to log the data.
-  File dataFile = SD.open("reading1.txt", FILE_WRITE);
-  // Creates the string, readings, to be printed on the file reading1.txt on the SD card.
+  File dataFile = SD.open("datatest.txt", FILE_WRITE);
+  // Creates the string, readings, to be printed on the file datatest.txt on the SD card.
   String readings = "";
   
 
@@ -107,7 +107,7 @@ void takeReadings(){
     Serial.println(readings);
   }
   else{
-    Serial.println("Error opening readings.txt");
+    Serial.println("Error opening datatest.txt");
   }
 
  

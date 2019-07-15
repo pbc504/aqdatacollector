@@ -2,6 +2,10 @@
 #include <SPI.h>
 #include <Adafruit_ADS1015.h>
 #include "RTClib.h"
+#include <SD.h>
+
+
+const int chipSelect = 10;
 
 
 Adafruit_ADS1115 ads1115NO(0x48);
@@ -23,7 +27,24 @@ void setup() {
 
   #endif
 
+ 
+
+
+
   Serial.begin(9600);
+
+   Serial.print("Initializing SD card...");
+
+  // see if the card is present and can be initialized:
+  if (!SD.begin(chipSelect)) {
+    Serial.println("Card failed, or not present");
+    // don't do anything more:
+    while (1);
+  }
+  Serial.println("card initialized.");
+
+
+  
   Serial.println("Hello!");
   delay(3000);
   ads1115NO.begin();
@@ -44,6 +65,8 @@ void loop() {
 }
 
 void takeReadings(){
+
+  String readings = "";
 
   DateTime now = rtc.now();
   
@@ -75,5 +98,26 @@ void takeReadings(){
  Serial.print(tempValue);
  Serial.print(",");
  Serial.println(humidValue);
+
+
+ //-----------------------------------------------
+
+  readings.concat(now.unixtime()+ 3353);
+  
+
+ File dataFile = SD.open("reading1.txt", FILE_WRITE);
+
+ 
+ if (dataFile) {
+    dataFile.println(readings);
+    dataFile.close();
+     //print to the serial port too:
+    Serial.println(readings);
+  }
+  else{
+    Serial.println("Error opening readings.txt");
+  }
+
+ 
   
 }
